@@ -4,6 +4,13 @@
 ## 技术原理系列文章
 [一种低侵入性的组件化方案之APP组件化简介](https://juejin.im/post/5bc592b1f265da0ace21600b)
 
+[一种低侵入性的组件化方案 之 组件化需要考虑的几个问题](https://juejin.im/post/5bc6fcb36fb9a05cd45713ab)
+
+[一种低侵入性的组件化方案 之 传统组件化方案的问题](https://juejin.im/post/5bc70291e51d450e76336a1f)
+
+[一种简单的低侵入性的组件化方案](https://juejin.im/post/5bc70550e51d450e827b9ca7)
+
+
 ## 一、集成步骤:
 ### 1、集成plugin
 在project的build.gradle文件中添加依赖和属性配置：
