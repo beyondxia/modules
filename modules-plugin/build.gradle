@@ -1,0 +1,80 @@
+apply plugin: 'groovy'
+
+if (devMode.toBoolean()) {
+    apply from: '../repo_plugin.gradle'
+} else {
+    apply from: '../bintray.gradle'
+}
+
+
+dependencies {
+    //gradle sdk
+    implementation gradleApi()
+    //groovy sdk
+    implementation localGroovy()
+    implementation 'com.android.tools.build:gradle:2.1.3'
+    implementation 'org.javassist:javassist:3.20.0-GA'
+    implementation 'commons-io:commons-io:2.5'
+
+    if (devMode.toBoolean()) {
+        implementation 'com.beyondxia.modules:annotation_dev:1.0.1'
+    } else {
+        implementation 'com.beyondxia.modules:annotation:1.0.3'
+    }
+
+}
+
+repositories {
+    maven {
+        url uri("./repos")
+    }
+    jcenter()
+    google()
+}
+
+//apply plugin: 'maven-publish'
+//
+//publishing {
+//    publications {
+//        mavenJava(MavenPublication) {
+//
+//            groupId 'com.beyondxia.modules'
+//            artifactId _artifactId
+//            version _version
+//
+//            from components.java
+//
+//        }
+//    }
+//}
+//
+//publishing {
+//    repositories {
+//        maven {
+//            url uri('./repos')
+//        }
+//    }
+//}
+
+//./gradlew clean modules-plugin:build bintrayUpload -PbintrayUser=beyondxia -PbintrayKey=af95d6af14ef35e80d9207234f96e56445b4677b -PdryRun=false
+//apply plugin: 'com.novoda.bintray-release'
+//allprojects {
+//    repositories {
+//        jcenter()
+//    }
+//    tasks.withType(Javadoc) {
+//        options{ encoding "UTF-8"
+//            charSet 'UTF-8'
+//            links "http://docs.oracle.com/javase/7/docs/api"
+//        }
+//    }
+//}
+//publish {
+//    repoName = 'transform'
+//    userOrg = 'beyondxia'
+//    groupId = 'com.beyondxia.modules'
+//    artifactId = 'transform-plugin'
+//    publishVersion = '1.0.4'
+//    desc = 'This is a plugin for modules'
+//    website = 'https://github.com/beyondxia/transform'
+//}

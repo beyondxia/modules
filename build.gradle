@@ -1,0 +1,61 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+
+    repositories {
+        maven {
+            url uri(project.rootProject.rootDir.absolutePath + "/repos")
+        }
+        google()
+        jcenter()
+
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.2'
+        if (devMode.toBoolean()) {
+            classpath 'com.beyondxia.modules:plugin_dev:1.0.3'
+        } else {
+            classpath 'com.beyondxia.modules:transform-plugin:1.0.4'
+        }
+
+        // package
+        classpath 'com.novoda:bintray-release:+'
+
+    }
+}
+
+allprojects {
+    repositories {
+        maven {
+            url uri(project.rootProject.rootDir.absolutePath + "/repos")
+        }
+        google()
+        jcenter()
+    }
+}
+
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    compileSdkVersion = 27
+    buildToolsVersion = "27.0.2"
+    minSdkVersion = 16
+    targetSdkVersion = 22
+    supportVersion = "27.1.1"
+    designVersion = "27.1.1"
+    aladdinVersion = "1.0.0"
+    versionCode = 500
+    versionName = "5.0.0"
+
+    //上传至maven仓库的aladdin core版本
+    mavenCoreVersionName = "1.0.2"
+    //上传至maven仓库的aladdin hybrid版本
+    mavenHybridVersionName = "1.0.2"
+    //aladdin core是否上传至release仓库
+    mavenCoreRelease = false
+    //aladdin hybrid是否上传至release仓库
+    mavenHybridRelease = false
+}

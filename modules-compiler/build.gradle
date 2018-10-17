@@ -1,0 +1,52 @@
+apply plugin: 'java-library'
+
+if (devMode.toBoolean()) {
+    apply from: '../repo_compiler.gradle'
+} else {
+    apply from: '../bintray.gradle'
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'com.google.auto.service:auto-service:1.0-rc2'
+
+    implementation 'com.squareup:javapoet:1.10.0'
+
+    implementation 'org.apache.commons:commons-lang3:3.4'
+    implementation 'org.apache.commons:commons-collections4:4.1'
+
+
+    if (devMode.toBoolean()) {
+        implementation 'com.beyondxia.modules:annotation_dev:1.0.1'
+    } else {
+        implementation 'com.beyondxia.modules:annotation:1.0.3'
+    }
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+
+//./gradlew clean :modules-compile:build bintrayUpload -PbintrayUser=beyondxia -PbintrayKey=af95d6af14ef35e80d9207234f96e56445b4677b -PdryRun=false
+//apply plugin: 'com.novoda.bintray-release'
+//allprojects {
+//    repositories {
+//        jcenter()
+//    }
+//    tasks.withType(Javadoc) {
+//        options{ encoding "UTF-8"
+//            charSet 'UTF-8'
+//            links "http://docs.oracle.com/javase/7/docs/api"
+//        }
+//    }
+//}
+//publish {
+//    repoName = 'compiler'
+//    userOrg = 'beyondxia'
+//    groupId = 'com.beyondxia.modules'
+//    artifactId = 'compiler'
+//    publishVersion = '1.0.3'
+//    desc = 'This is a compiler for modules'
+//    website = 'https://github.com/beyondxia/compiler'
+//}

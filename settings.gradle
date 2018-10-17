@@ -1,0 +1,11 @@
+//include ':app', ':apt-annotation', ':apt-processor', ':apt-library', ':aladdin-interface-library', ':bussiness1', ':BuildSrc',
+//         'aladdinModularization', 'aladdinCore'
+
+
+include ':app', ':modules-compiler', ':modules-services-api', ':business1', ':other:business2'
+
+include ':modules-annotation'
+include ':modules-plugin'
+include ':modules-api'
+
+//':BuildSrc',

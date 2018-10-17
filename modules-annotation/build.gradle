@@ -1,0 +1,40 @@
+apply plugin: 'java-library'
+
+if (devMode.toBoolean()) {
+    apply from: '../repo_annotation.gradle'
+} else {
+    apply from: '../bintray.gradle'
+}
+
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+
+
+//./gradlew clean build bintrayUpload -PbintrayUser=beyondxia -PbintrayKey=af95d6af14ef35e80d9207234f96e56445b4677b -PdryRun=false
+//apply plugin: 'com.novoda.bintray-release'
+//allprojects {
+//    repositories {
+//        jcenter()
+//    }
+//    tasks.withType(Javadoc) {
+//        options{ encoding "UTF-8"
+//            charSet 'UTF-8'
+//            links "http://docs.oracle.com/javase/7/docs/api"
+//        }
+//    }
+//}
+//publish {
+//    repoName = 'annotation'
+//    userOrg = 'beyondxia'
+//    groupId = 'com.beyondxia.modules'
+//    artifactId = 'annotation'
+//    publishVersion = '1.0.3'
+//    desc = 'This is a annotation for modules'
+//    website = 'https://github.com/beyondxia/annotation'
+//}

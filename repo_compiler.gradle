@@ -1,0 +1,23 @@
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+
+            groupId 'com.beyondxia.modules'
+            artifactId 'compiler_dev'
+            version '1.0.1'
+
+            from components.java
+
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            url uri('../repos')
+        }
+    }
+}

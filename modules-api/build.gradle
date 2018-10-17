@@ -1,0 +1,71 @@
+apply plugin: 'com.android.library'
+
+if (devMode.toBoolean()) {
+    apply from: '../repo_api.gradle'
+} else {
+    apply from: '../bintray.gradle'
+}
+
+android {
+    compileSdkVersion 25
+
+    defaultConfig {
+        minSdkVersion 12
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+            minifyEnabled false
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+
+    buildToolsVersion '25.0.0'
+}
+
+dependencies {
+    implementation "com.android.support:appcompat-v7:25.0.0"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.google.code.gson:gson:2.6.2'
+
+    if (devMode.toBoolean()) {
+        api 'com.beyondxia.modules:annotation_dev:1.0.1'
+    } else {
+        api 'com.beyondxia.modules:annotation:1.0.3'
+    }
+}
+
+
+//./gradlew clean :modules-api:build bintrayUpload -PbintrayUser=beyondxia -PbintrayKey=af95d6af14ef35e80d9207234f96e56445b4677b -PdryRun=false
+//apply plugin: 'com.novoda.bintray-release'
+//allprojects {
+//    repositories {
+//        jcenter()
+//    }
+//    tasks.withType(Javadoc) {
+//        options{ encoding "UTF-8"
+//            charSet 'UTF-8'
+//            links "http://docs.oracle.com/javase/7/docs/api"
+//        }
+//    }
+//}
+//publish {
+//    repoName = 'api'
+//    userOrg = 'beyondxia'
+//    groupId = 'com.beyondxia.modules'
+//    artifactId = 'api'
+//    publishVersion = '1.0.2'
+//    desc = 'This is a api core for modules'
+//    website = 'https://github.com/beyondxia/api'
+//}
