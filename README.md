@@ -117,7 +117,7 @@ BCDictionary dictionary = LoginService.get().getUserInfo();
 ## QQ群
 QQ群号：881324846
 
-<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=5fdd1171114b5a1eb80ea0be00b392c2e3e8ab6f278f182a07e959e80d4c9409"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="modules交流群" title="modules交流群"></a>
+<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=cbe96456218bbb48084e92163122e13c3159f3d507c3ebd5e66312a20d475496"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="modules技术交流群" title="modules技术交流群"></a>
 
 或者扫描下方二维码加群聊
 
