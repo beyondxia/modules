@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/bt_business1_call"
@@ -29,7 +28,7 @@
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:onClick="onClick"
-        android:text="business1_call(getUserInfo)"/>
+        android:text="business1_call(getUserInfoModel)"/>
 
     <Button
         android:id="@+id/bt_business1_nav"
@@ -53,7 +52,7 @@
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:onClick="onClick"
-        android:text="business1_view"/>
+        android:text="get_business1_view"/>
 
     <Button
         android:id="@+id/bt_submodule_fragment"
@@ -61,6 +60,6 @@
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:onClick="onClick"
-        android:text="business1_fragment"/>
+        android:text="get_business1_fragment"/>
 
 </LinearLayout>

@@ -12,7 +12,7 @@ import com.beyondxia.message.B2Activity;
  * Created by xiaojunxia on 2018/9/26.
  */
 @ExportService(moduleName = "business2")
-public class Message {
+public class Message implements IMessage{
 
     @ExportMethod
     public String getMessage(String msg) {

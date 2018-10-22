@@ -2,6 +2,7 @@ package com.beyondxia.message;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -12,21 +13,23 @@ import com.beyondxia.message.R;
 import com.beyondxia.modules.BCDictionary;
 
 
-public class B2Activity extends Activity {
+public class B2Activity extends AppCompatActivity {
     private Button bt_host_call;
     private Button bt_business1_call;
     private Button bt_business1_call2;
     private Button bt_business1_nav;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_b2);
+        setTitle("Business2");
 
-        bt_host_call = findViewById(R.id.bt_host_call);
-        bt_business1_call = findViewById(R.id.bt_business1_call);
-        bt_business1_call2 = findViewById(R.id.bt_business1_call2);
-        bt_business1_nav = findViewById(R.id.bt_business1_nav);
+        bt_host_call = (Button) findViewById(R.id.bt_host_call);
+        bt_business1_call = (Button) findViewById(R.id.bt_business1_call);
+        bt_business1_call2 = (Button) findViewById(R.id.bt_business1_call2);
+        bt_business1_nav = (Button) findViewById(R.id.bt_business1_nav);
 
 
         bt_host_call.setOnClickListener(new View.OnClickListener() {
