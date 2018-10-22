@@ -1,6 +1,9 @@
 ## modules简介
 项目在进行组件化改造中，不可避免的会遇到模块之间的解耦与组件模块之间的服务调用。针对以上问题，本框架提供了一套低侵入、轻便简洁的接入方式。框架通过注解来标识暴露的服务，以确保框架对原代码的低侵入。模块间的服务调用通过调用框架生成的中间类来完成调用，最大程度降低了模块间的耦合
 
+## demo
+<img src="image/HostApp.png" width="30%" height="30%"/> <img src="image/Business1.png" width="30%" height="30%"/> <img src="image/Business2.png" width="30%" height="30%"/>
+
 ## 技术原理系列文章
 [一种低侵入性的组件化方案之APP组件化简介](https://juejin.im/post/5bc592b1f265da0ace21600b)
 
