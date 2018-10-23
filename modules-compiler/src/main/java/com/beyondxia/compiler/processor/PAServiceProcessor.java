@@ -2,6 +2,7 @@ package com.beyondxia.compiler.processor;
 
 import com.beyondxia.annotation.ExportMethod;
 import com.beyondxia.annotation.ExportService;
+import com.beyondxia.compiler.utils.SystemUtils;
 import com.google.auto.service.AutoService;
 import com.beyondxia.compiler.utils.Constants;
 import com.squareup.javapoet.ClassName;
@@ -60,7 +61,7 @@ public class PAServiceProcessor extends AbstractProcessor {
 
     private HashMap<String, List<ExecutableElement>> methodMap = new HashMap<>();
     private Elements mElementUtils;
-    private File mPath = new File("." + File.separator + "modules-services-api" + File.separator + "src" + File.separator + "main" + File.separator + "java");
+    private File mPath = new File(SystemUtils.getPathByOs("./modules-services-api/src/main/java"));
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnvironment) {
