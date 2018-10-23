@@ -28,7 +28,7 @@ sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
 
 
-//./gradlew clean :modules-compile:build bintrayUpload -PbintrayUser=beyondxia -PbintrayKey=af95d6af14ef35e80d9207234f96e56445b4677b -PdryRun=false
+//./gradlew clean :modules-compile:build bintrayUpload -PbintrayUser=beyondxia -PbintrayKey=**** -PdryRun=false
 //apply plugin: 'com.novoda.bintray-release'
 //allprojects {
 //    repositories {
