@@ -60,7 +60,7 @@ public class PAServiceProcessor extends AbstractProcessor {
 
     private HashMap<String, List<ExecutableElement>> methodMap = new HashMap<>();
     private Elements mElementUtils;
-    private File mPath = new File("./modules-services-api/src/main/java");
+    private File mPath = new File("." + File.separator + "modules-services-api" + File.separator + "src" + File.separator + "main" + File.separator + "java");
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnvironment) {

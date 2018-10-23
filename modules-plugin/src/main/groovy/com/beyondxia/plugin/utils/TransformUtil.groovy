@@ -20,16 +20,20 @@ class TransformUtil {
         if (path.endsWith(".jar")) {
             //module jar
             if (path.matches(Constant.MODULE_JAR_DEBUG)) {
-                mPool.appendClassPath(project.rootDir.toString() + "/modules-services-api/build/intermediates/classes/debug")
+                mPool.appendClassPath(project.rootDir.toString() + "${File.separator}modules-services-api${File.separator}build${File.separator}intermediates${File.separator}classes${File.separator}debug")
             } else if (path.matches(Constant.MODULE_JAR_RELEASE)) {
-                mPool.appendClassPath(project.rootDir.toString() + "/modules-services-api/build/intermediates/classes/release")
+                mPool.appendClassPath(project.rootDir.toString() + "${File.separator}modules-services-api${File.separator}build${File.separator}intermediates${File.separator}classes${File.separator}release")
+            } else {
+                throw new IllegalArgumentException("Illegal path ${path}")
             }
         } else {
             //module directory
             if (path.matches(Constant.DIRECTORY_DEBUG)) {
-                mPool.appendClassPath(project.rootDir.toString() + "/modules-services-api/build/intermediates/classes/debug")
+                mPool.appendClassPath(project.rootDir.toString() + "${File.separator}modules-services-api${File.separator}build${File.separator}intermediates${File.separator}classes${File.separator}debug")
             } else if (path.matches(Constant.DIRECTORY_RELEASE)) {
-                mPool.appendClassPath(project.rootDir.toString() + "/modules-services-api/build/intermediates/classes/release")
+                mPool.appendClassPath(project.rootDir.toString() + "${File.separator}modules-services-api${File.separator}build${File.separator}intermediates${File.separator}classes${File.separator}release")
+            } else {
+                throw new IllegalArgumentException("Illegal path ${path}")
             }
         }
 

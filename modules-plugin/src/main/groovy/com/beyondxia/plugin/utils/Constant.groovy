@@ -6,19 +6,18 @@ package com.beyondxia.plugin.utils
 class Constant {
 
     static
-    final String DIRECTORY_DEBUG = ".*/build/intermediates/classes/[a-z,A-Z]*[/]?debug.*"
+    final String DIRECTORY_DEBUG = ".*${File.separator}build${File.separator}intermediates${File.separator}classes${File.separator}[a-z,A-Z]*[${File.separator}]?debug.*"
 
     static
-    final String DIRECTORY_DEBUG_REGEX = "build/intermediates/classes/[a-z,A-Z]*[/]?debug/"
+    final String DIRECTORY_DEBUG_REGEX = "build${File.separator}intermediates${File.separator}classes${File.separator}[a-z,A-Z]*[${File.separator}]?debug${File.separator}"
 
     static
-    final String DIRECTORY_RELEASE = ".*/build/intermediates/classes/[a-z,A-Z]*[/]?release.*"
+    final String DIRECTORY_RELEASE = ".*${File.separator}build${File.separator}intermediates${File.separator}classes${File.separator}[a-z,A-Z]*[${File.separator}]?release.*"
 
     static
-    final String DIRECTORY_RELEASE_REGEX = "build/intermediates/classes/[a-z,A-Z]*[/]?release/"
+    final String DIRECTORY_RELEASE_REGEX = "build${File.separator}intermediates${File.separator}classes${File.separator}[a-z,A-Z]*[${File.separator}]?release${File.separator}"
 
-    static final String MODULE_JAR_DEBUG = ".*/build/intermediates/intermediate-jars/debug/.*"
-    static final String MODULE_JAR_RELEASE = ".*/build/intermediates/intermediate-jars/release/.*"
-
+    static final String MODULE_JAR_DEBUG = ".*${File.separator}build${File.separator}intermediates${File.separator}intermediate-jars${File.separator}debug${File.separator}.*"
+    static final String MODULE_JAR_RELEASE = ".*${File.separator}build${File.separator}intermediates${File.separator}intermediate-jars${File.separator}release${File.separator}.*"
 
 }
