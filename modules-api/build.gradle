@@ -47,7 +47,8 @@ dependencies {
 }
 
 
-//./gradlew clean :modules-api:build bintrayUpload -PbintrayUser=beyondxia -PbintrayKey=**** -PdryRun=false
+//clean ---- build----generatePomFileForReleasePublication---publishReleasePublicationToMabenLocal---bintrayUpload
+// ./gradlew bintrayUpload -PbintrayUser=beyondxia -PbintrayKey=**** -PdryRun=false
 //apply plugin: 'com.novoda.bintray-release'
 //allprojects {
 //    repositories {

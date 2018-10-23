@@ -26,7 +26,7 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.beyondxia.modules:transform-plugin:1.0.4'
+        classpath 'com.beyondxia.modules:transform-plugin:1.0.7'
         //...
 
     }
@@ -48,7 +48,7 @@ api 'com.beyondxia.modules:api:1.0.2'
 ### 3、添加annotationProcessor
 在需要接入的业务module中添加如下annotationProcessor依赖
 ```
-annotationProcessor 'com.beyondxia.modules:compiler:1.0.3'
+annotationProcessor 'com.beyondxia.modules:compiler:1.0.7'
 ```
 至此，已完成所有的配置工作
 
