@@ -61,7 +61,7 @@ public class PAServiceProcessor extends AbstractProcessor {
 
     private HashMap<String, List<ExecutableElement>> methodMap = new HashMap<>();
     private Elements mElementUtils;
-    private File mPath = new File(SystemUtils.getPathByOs("./modules-services-api/src/main/java"));
+    private File mPath = new File(SystemUtils.getPathByOs("modules-services-api/src/main/java"));
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnvironment) {
@@ -87,6 +87,7 @@ public class PAServiceProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
+        System.out.println(mPath.getAbsoluteFile().toString());
         Set<? extends Element> methodElements = roundEnvironment.getElementsAnnotatedWith(ExportMethod.class);
         if (methodElements == null || methodElements.isEmpty()) {
             return false;
@@ -140,7 +141,7 @@ public class PAServiceProcessor extends AbstractProcessor {
             interfaceBuilder.addMethod(methodBuilder.build());
         }
 
-        JavaFile.builder(packageName, interfaceBuilder.build()).build().writeTo(mPath);
+        JavaFile.builder(packageName, interfaceBuilder.build()).build().writeTo(mPath.getAbsoluteFile());
 
         //class
         createClassSourceFile(packageName, getClassSimpleNameByFullName(fullClassName));
@@ -160,7 +161,7 @@ public class PAServiceProcessor extends AbstractProcessor {
                 .append("\t\treturn null;\n")
                 .append("\t}\n")
                 .append("}\n");
-        writeTo(mPath.toPath(), getServiceClassSourceName(className), packageName, sb.toString());
+        writeTo(mPath.getAbsoluteFile().toPath(), getServiceClassSourceName(className), packageName, sb.toString());
     }
 
     private void writeTo(Path directory, String className, String packageName, String content) throws IOException {

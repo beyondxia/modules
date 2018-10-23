@@ -14,7 +14,7 @@ public class SystemUtils {
             return "";
         }
         if (isWindows()) {
-            return originPath.replaceAll("/", "\\");
+            return originPath.replace("/", "\\");
         }
         return originPath;
 

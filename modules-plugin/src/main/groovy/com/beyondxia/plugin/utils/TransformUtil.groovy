@@ -19,18 +19,18 @@ class TransformUtil {
 
         if (path.endsWith(".jar")) {
             //module jar
-            if (path.matches(Constant.MODULE_JAR_DEBUG)) {
+            if (path.replace("\\", "/").matches(Constant.MODULE_JAR_DEBUG)) {
                 mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules-services-api/build/intermediates/classes/debug"))
-            } else if (path.matches(Constant.MODULE_JAR_RELEASE)) {
+            } else if (path.replace("\\", "/").matches(Constant.MODULE_JAR_RELEASE)) {
                 mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules-services-api/build/intermediates/classes/release"))
             } else {
                 throw new IllegalArgumentException("Illegal path ${path}")
             }
         } else {
             //module directory
-            if (path.matches(Constant.DIRECTORY_DEBUG)) {
+            if (path.replace("\\", "/").matches(Constant.DIRECTORY_DEBUG)) {
                 mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules-services-api/build/intermediates/classes/debug"))
-            } else if (path.matches(Constant.DIRECTORY_RELEASE)) {
+            } else if (path.replace("\\", "/").matches(Constant.DIRECTORY_RELEASE)) {
                 mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules-services-api/build/intermediates/classes/release"))
             } else {
                 throw new IllegalArgumentException("Illegal path ${path}")
@@ -94,7 +94,7 @@ class TransformUtil {
         if (dir.isDirectory()) {
             dir.eachFileRecurse { File file ->
 
-                String filePath = file.absolutePath
+                String filePath = file.absolutePath.replace("\\", "/")
 
                 if (filePath.endsWith(".class")) {
                     String classPath
