@@ -110,7 +110,7 @@ c、ILifeCycle:服务类的生命周期，是否实现该接口为可选。若�
 d、特别重要:该类不允许存在父类。
 
 ### 三、生成中间类:
-完成以上服务类的配置工作后，build工程或执行./gradlew :moduleName:compileDebugJavaWithJavac任务即可完成对应的服务中间类， 生成的中间类的 录为:rootProjectDir/modules-services-api/src/main/java
+完成以上服务类的配置工作后，执行./gradlew :moduleName:clean :moduleName:compileDebugJavaWithJavac任务即可完成对应的服务中间类， 生成的中间类的 录为:rootProjectDir/modules-services-api/src/main/java
 
 <img src="image/modules-api.png" width="40%" height="40%"/>
 
