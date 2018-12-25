@@ -2,7 +2,7 @@
 项目在进行组件化改造中，不可避免的会遇到模块之间的解耦与组件模块之间的服务调用。针对以上问题，本框架提供了一套低侵入、轻便简洁的接入方式。框架通过注解来标识暴露的服务，以确保框架对原代码的低侵入。模块间的服务调用通过调用框架生成的中间类来完成调用，最大程度降低了模块间的耦合
 
 ## demo
-<img src="image/HostApp.png" width="40%" height="40%"/> <img src="image/Business2.png" width="40%" height="40%"/>
+![image](image/demo.gif)
 
 ## 技术原理系列文章
 [一种低侵入性的组件化方案之APP组件化简介](https://juejin.im/post/5bc592b1f265da0ace21600b)
@@ -26,7 +26,7 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.beyondxia.modules:transform-plugin:1.0.4'
+        classpath 'com.beyondxia.modules:transform-plugin:1.0.7'
         //...
 
     }
@@ -48,7 +48,7 @@ api 'com.beyondxia.modules:api:1.0.2'
 ### 3、添加annotationProcessor
 在需要接入的业务module中添加如下annotationProcessor依赖
 ```
-annotationProcessor 'com.beyondxia.modules:compiler:1.0.3'
+annotationProcessor 'com.beyondxia.modules:compiler:1.0.7'
 ```
 至此，已完成所有的配置工作
 
@@ -110,7 +110,7 @@ c、ILifeCycle:服务类的生命周期，是否实现该接口为可选。若�
 d、特别重要:该类不允许存在父类。
 
 ### 三、生成中间类:
-完成以上服务类的配置工作后，build工程或执行./gradlew :moduleName:compileDebugJavaWithJavac任务即可完成对应的服务中间类， 生成的中间类的 录为:rootProjectDir/modules-services-api/src/main/java
+完成以上服务类的配置工作后，执行./gradlew :moduleName:clean :moduleName:compileDebugJavaWithJavac任务即可完成对应的服务中间类， 生成的中间类的 录为:rootProjectDir/modules-services-api/src/main/java
 
 <img src="image/modules-api.png" width="40%" height="40%"/>
 
