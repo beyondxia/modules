@@ -20,18 +20,18 @@ class TransformUtil {
         if (path.endsWith(".jar")) {
             //module jar
             if (path.replace("\\", "/").matches(Constant.MODULE_JAR_DEBUG)) {
-                mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules-services-api/build/intermediates/classes/debug"))
+                mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules_services_api/build/intermediates/classes/debug"))
             } else if (path.replace("\\", "/").matches(Constant.MODULE_JAR_RELEASE)) {
-                mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules-services-api/build/intermediates/classes/release"))
+                mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules_services_api/build/intermediates/classes/release"))
             } else {
                 throw new IllegalArgumentException("Illegal path ${path}")
             }
         } else {
             //module directory
             if (path.replace("\\", "/").matches(Constant.DIRECTORY_DEBUG)) {
-                mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules-services-api/build/intermediates/classes/debug"))
+                mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules_services_api/build/intermediates/classes/debug"))
             } else if (path.replace("\\", "/").matches(Constant.DIRECTORY_RELEASE)) {
-                mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules-services-api/build/intermediates/classes/release"))
+                mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules_services_api/build/intermediates/classes/release"))
             } else {
                 throw new IllegalArgumentException("Illegal path ${path}")
             }

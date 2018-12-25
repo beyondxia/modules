@@ -61,7 +61,7 @@ public class PAServiceProcessor extends AbstractProcessor {
 
     private HashMap<String, List<ExecutableElement>> methodMap = new HashMap<>();
     private Elements mElementUtils;
-    private File mPath = new File(SystemUtils.getPathByOs("modules-services-api/src/main/java"));
+    private File mPath = new File(SystemUtils.getPathByOs("modules_services_api/src/main/java"));
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnvironment) {

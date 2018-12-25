@@ -2,7 +2,7 @@
 //         'aladdinModularization', 'aladdinCore'
 
 
-include ':app', ':modules-compiler', ':modules-services-api', ':business1', ':other:business2'
+include ':app', ':modules-compiler', ':modules_services_api', ':business1', ':other:business2'
 
 include ':modules-annotation'
 include ':modules-plugin'

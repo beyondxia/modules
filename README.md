@@ -39,7 +39,7 @@ apply plugin: 'com.beyondxia.modules.plugin'
 ```
 
 ### 2、新建module
-在项目根目录中新建一个名为modules-services-api（工程名要命名为modules-services-api）的android library性质的子module（用来放置生成的公共源码），并在该module的build.gradle文件中添加如下依赖和属性配置：
+在项目根目录中新建一个名为modules_services_api（工程名要命名为modules_services_api）的android library性质的子module（用来放置生成的公共源码），并在该module的build.gradle文件中添加如下依赖和属性配置：
 ```
 api 'com.beyondxia.modules:api:1.0.2'
 ```
@@ -110,7 +110,7 @@ c、ILifeCycle:服务类的生命周期，是否实现该接口为可选。若�
 d、特别重要:该类不允许存在父类。
 
 ### 三、生成中间类:
-完成以上服务类的配置工作后，执行./gradlew :moduleName:clean :moduleName:compileDebugJavaWithJavac任务即可完成对应的服务中间类， 生成的中间类的 录为:rootProjectDir/modules-services-api/src/main/java
+完成以上服务类的配置工作后，执行./gradlew :moduleName:clean :moduleName:compileDebugJavaWithJavac任务即可完成对应的服务中间类， 生成的中间类的 录为:rootProjectDir/modules_services_api/src/main/java
 
 <img src="image/modules-api.png" width="40%" height="40%"/>
 

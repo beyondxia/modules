@@ -1,12 +1,9 @@
 package com.beyondxia.host;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beyondxia.bussiness1.export.LoginService;

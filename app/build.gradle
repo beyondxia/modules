@@ -49,7 +49,7 @@ dependencies {
     }
 
 
-    implementation project(':modules-services-api')
+    implementation project(':modules_services_api')
     runtimeOnly project(':business1')
     runtimeOnly project(':other:business2')
 

@@ -32,5 +32,5 @@ dependencies {
     } else {
         annotationProcessor 'com.beyondxia.modules:compiler:1.0.7'
     }
-    implementation project(':modules-services-api')
+    implementation project(':modules_services_api')
 }
