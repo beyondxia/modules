@@ -47,7 +47,7 @@ targetCompatibility = "1.7"
 //    userOrg = 'beyondxia'
 //    groupId = 'com.beyondxia.modules'
 //    artifactId = 'compiler'
-//    publishVersion = '1.0.7'
+//    publishVersion = '1.0.8'
 //    desc = 'This is a compiler for modules'
 //    website = 'https://github.com/beyondxia/compiler'
 //}
