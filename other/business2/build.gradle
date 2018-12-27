@@ -30,7 +30,7 @@ dependencies {
     if (devMode.toBoolean()) {
         annotationProcessor 'com.beyondxia.modules:compiler_dev:1.0.1'
     } else {
-        annotationProcessor 'com.beyondxia.modules:compiler:1.1.0'
+        annotationProcessor 'com.beyondxia.modules:compiler:1.1.1'
     }
     implementation project(':modules_services_api')
 }

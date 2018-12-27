@@ -15,7 +15,7 @@ buildscript {
         if (devMode.toBoolean()) {
             classpath 'com.beyondxia.modules:plugin_dev:1.0.3'
         } else {
-            classpath 'com.beyondxia.modules:transform-plugin:1.1.0'
+            classpath 'com.beyondxia.modules:transform-plugin:1.1.1'
         }
 
         // package

@@ -24,8 +24,8 @@ dependencies {
     }
 }
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
 
 
 //clean ---- build----generatePomFileForReleasePublication---publishReleasePublicationToMabenLocal---bintrayUpload
@@ -47,7 +47,7 @@ targetCompatibility = "1.7"
 //    userOrg = 'beyondxia'
 //    groupId = 'com.beyondxia.modules'
 //    artifactId = 'compiler'
-//    publishVersion = '1.1.0'
+//    publishVersion = '1.1.1'
 //    desc = 'This is a compiler for modules'
 //    website = 'https://github.com/beyondxia/compiler'
 //}
