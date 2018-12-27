@@ -5,20 +5,26 @@ package com.beyondxia.plugin.utils
  **/
 class Constant {
 
-    static
-    final String DIRECTORY_DEBUG = ".*/build/intermediates/classes/[a-z,A-Z]*[/]?debug.*"
+//    static
+//    final String DIRECTORY_DEBUG = ".*/build/intermediates/classes/[a-z,A-Z]*[/]?debug.*"
 
     static
-    final String DIRECTORY_DEBUG_REGEX = "build/intermediates/classes/[a-z,A-Z]*[/]?debug/"
+    final String DIRECTORY_DEBUG = ".*/build/intermediates/.*/debug.*"
+
+//    static
+//    final String DIRECTORY_DEBUG_REGEX = "build/intermediates/classes/[a-z,A-Z]*[/]?debug/"
+
+//    static
+//    final String DIRECTORY_RELEASE = ".*/build/intermediates/classes/[a-z,A-Z]*[/]?release.*"
 
     static
-    final String DIRECTORY_RELEASE = ".*/build/intermediates/classes/[a-z,A-Z]*[/]?release.*"
+    final String DIRECTORY_RELEASE = ".*/build/intermediates/.*/release.*"
 
-    static
-    final String DIRECTORY_RELEASE_REGEX = "build/intermediates/classes/[a-z,A-Z]*[/]?release/"
-
-    static final String MODULE_JAR_DEBUG = ".*/build/intermediates/intermediate-jars/debug/.*"
-    static final String MODULE_JAR_RELEASE = ".*/build/intermediates/intermediate-jars/release/.*"
+//    static
+//    final String DIRECTORY_RELEASE_REGEX = "build/intermediates/classes/[a-z,A-Z]*[/]?release/"
+//
+//    static final String MODULE_JAR_DEBUG = ".*/build/intermediates/intermediate-jars/debug/.*"
+//    static final String MODULE_JAR_RELEASE = ".*/build/intermediates/intermediate-jars/release/.*"
 
 
 }

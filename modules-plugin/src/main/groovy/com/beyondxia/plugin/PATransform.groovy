@@ -47,7 +47,8 @@ class PATransform extends Transform {
         transformInvocation.inputs.each { TransformInput input ->
             if (!input.directoryInputs.isEmpty()) {
                 def directoryInputPath = input.directoryInputs[0].file.absolutePath
-                TransformUtil.appendClassPath(mProject, directoryInputPath)
+                println "directoryInputPath:${directoryInputPath}"
+                TransformUtil.appendClassPathByDirectory(mProject, directoryInputPath)
             }
         }
 
@@ -63,10 +64,10 @@ class PATransform extends Transform {
             }
             //遍历jar文件，对jar不进行操作，但是要输出到指定目录
             input.jarInputs.each { JarInput jarInput ->
-                println("======jarInput***" + jarInput.toString())
                 def jarPath = jarInput.file.absolutePath
-                if (jarPath.endsWith("classes.jar")) {
-                    TransformUtil.handleJarInput(jarPath, mProject)
+//                println("======jarInput***" + jarPath)
+                if (jarPath.endsWith(".jar")) {
+                    TransformUtil.handleJarInput(jarPath)
                 }
                 //重命名输出文件（同目录copyFile会冲突）
                 def jarName = jarInput.name
