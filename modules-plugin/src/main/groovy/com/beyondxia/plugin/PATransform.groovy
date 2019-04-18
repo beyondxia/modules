@@ -66,7 +66,7 @@ class PATransform extends Transform {
             input.jarInputs.each { JarInput jarInput ->
                 def jarPath = jarInput.file.absolutePath
 //                println("======jarInput***" + jarPath)
-                if (jarPath.endsWith(".jar")) {
+                if (TransformUtil.jarNeedHandle(jarPath)) {
                     TransformUtil.handleJarInput(jarPath)
                 }
                 //重命名输出文件（同目录copyFile会冲突）

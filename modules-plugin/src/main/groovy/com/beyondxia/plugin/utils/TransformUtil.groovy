@@ -17,14 +17,23 @@ class TransformUtil {
         mPool.appendClassPath(project.android.bootClasspath[0].toString())
         mPool.importPackage("android.os.Bundle")
         if (path.replace("\\", "/").matches(Constant.DIRECTORY_DEBUG)) {
-            mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules_services_api/build/intermediates/classes/debug"))
-            println("添加的classPath路径为:/modules_services_api/build/intermediates/classes/debug")
+            Constant.DIRECTORYS_MODULES_API_CLASS_DEBUG.each {
+                mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs(it))
+                println("添加的classPath路径为: ${project.rootDir.toString() + SystemUtils.getPathByOs(it)}")
+            }
+//            mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules_services_api/build/intermediates/classes/debug"))
+//            println("添加的classPath路径为:/modules_services_api/build/intermediates/classes/debug")
         } else if (path.replace("\\", "/").matches(Constant.DIRECTORY_RELEASE)) {
-            mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules_services_api/build/intermediates/classes/release"))
-            println("添加的classPath路径为:/modules_services_api/build/intermediates/classes/release")
+            Constant.DIRECTORYS_MODULES_API_CLASS_RELEASE.each {
+                mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs(it))
+                println("添加的classPath路径为: $it")
+            }
+//            mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules_services_api/build/intermediates/classes/release"))
+//            println("添加的classPath路径为:/modules_services_api/build/intermediates/classes/release")
         } else {
             throw new IllegalArgumentException("Illegal path ${path} - directory")
         }
+
 //        if (path.endsWith(".jar")) {
 //            //module jar
 //            if (path.replace("\\", "/").matches(Constant.MODULE_JAR_DEBUG)) {
@@ -48,9 +57,8 @@ class TransformUtil {
     }
 
     static void handleJarInput(String path) {
+        println("***********************handleJarInput:${path}")
         File jarFile = new File(path)
-//        println("***********************handleJarInput:${path}")
-
         // jar包解压后的保存路径
         String jarUnZipDir = jarFile.getParent() + File.separator + jarFile.getName().replace('.jar', '')
         //若文件夹存在，则删除
@@ -100,7 +108,7 @@ class TransformUtil {
                 FileUtils.copyFile(jarFileBak, jarFile)
                 throw e
             } finally {
-            // 删除备份的jar包
+                // 删除备份的jar包
                 jarFileBak.delete()
             }
         }
@@ -153,6 +161,20 @@ class TransformUtil {
 
             }
         }
-
     }
+
+    static boolean jarNeedHandle(String jarPath) {
+        if (jarPath == null || "" == jarPath) {
+            return false
+        }
+        if (!jarPath.endsWith(".jar")) {
+            return false
+        }
+        //不处理gradle依赖的jar包
+        if (jarPath.contains(".gradle/caches")) {
+            return false
+        }
+        return true
+    }
+
 }
