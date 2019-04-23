@@ -2,6 +2,7 @@ package com.beyondxia.host;
 
 import android.app.Application;
 
+import com.beyondxia.modules.BuildConfig;
 import com.beyondxia.modules.ServiceHelper;
 
 /**
@@ -12,6 +13,6 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ServiceHelper.init(this);
+        ServiceHelper.init(this, BuildConfig.DEBUG);
     }
 }

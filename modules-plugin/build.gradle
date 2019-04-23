@@ -58,24 +58,24 @@ repositories {
 
 //clean ---- build----generatePomFileForReleasePublication---publishReleasePublicationToMabenLocal---bintrayUpload
 // ./gradlew bintrayUpload -PbintrayUser=beyondxia -PbintrayKey=**** -PdryRun=false
-apply plugin: 'com.novoda.bintray-release'
-allprojects {
-    repositories {
-        jcenter()
-    }
-    tasks.withType(Javadoc) {
-        options{ encoding "UTF-8"
-            charSet 'UTF-8'
-            links "http://docs.oracle.com/javase/7/docs/api"
-        }
-    }
-}
-publish {
-    repoName = 'transform'
-    userOrg = 'beyondxia'
-    groupId = 'com.beyondxia.modules'
-    artifactId = 'transform-plugin'
-    publishVersion = '1.1.3'
-    desc = 'This is a plugin for modules'
-    website = 'https://github.com/beyondxia/transform'
-}
+//apply plugin: 'com.novoda.bintray-release'
+//allprojects {
+//    repositories {
+//        jcenter()
+//    }
+//    tasks.withType(Javadoc) {
+//        options{ encoding "UTF-8"
+//            charSet 'UTF-8'
+//            links "http://docs.oracle.com/javase/7/docs/api"
+//        }
+//    }
+//}
+//publish {
+//    repoName = 'transform'
+//    userOrg = 'beyondxia'
+//    groupId = 'com.beyondxia.modules'
+//    artifactId = 'transform-plugin'
+//    publishVersion = '1.1.3'
+//    desc = 'This is a plugin for modules'
+//    website = 'https://github.com/beyondxia/transform'
+//}

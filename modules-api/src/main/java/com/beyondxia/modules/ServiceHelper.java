@@ -28,8 +28,9 @@ public class ServiceHelper {
     private static final Map<String, Class> cacheServices = new HashMap<>();
 
 
-    public static void init(Context context) {
+    public static void init(Context context, boolean debug) {
         try {
+            PAServiceConfig.setIsDebug(debug);
             Set<String> registerClassName = ClassUtil.getFileNameByPackageName(context, REGISTER_PACKAGE_NAME);
             for (String className : registerClassName) {
                 Class<?> registerClazz = Class.forName(className);
@@ -91,7 +92,7 @@ public class ServiceHelper {
             iLifeCycle.onInstalled();
             long timeEnd = System.currentTimeMillis();
             if (timeEnd - timeStart > PAServiceConfig.maxLifeCycleInitWarningTime) {
-                String warning = String.format("you should not do some time-consuming operation on main thread! time spend: %d ms",(timeEnd - timeStart));
+                String warning = String.format("you should not do some time-consuming operation on main thread! time spend: %d ms", (timeEnd - timeStart));
                 Log.w("ServiceWarning", warning);
             }
         }
