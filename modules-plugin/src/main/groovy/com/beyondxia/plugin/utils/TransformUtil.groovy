@@ -56,7 +56,7 @@ class TransformUtil {
 
     }
 
-    static void handleJarInput(String path) {
+    static void handleJarInput(String path, Project project) {
         println("***********************handleJarInput:${path}")
         File jarFile = new File(path)
         // jar包解压后的保存路径
@@ -72,7 +72,7 @@ class TransformUtil {
         // 注入代码
         mPool.appendClassPath(jarUnZipDir)
         for (String className : classNameList) {
-            if (className.endsWith(".class") && !className.endsWith("R.class") && !className.contains('R$')) {
+            if (isValidClass(className) && classNeedHandle(className, project)) {
                 className = className.substring(0, className.length() - 6)
                 CtClass ctClass = mPool.getCtClass(className)
                 def annotation = ctClass.getAnnotation(ExportService.class)
@@ -126,7 +126,7 @@ class TransformUtil {
 
                 String filePath = file.absolutePath.replace("\\", "/")
 
-                if (filePath.endsWith(".class") && !filePath.endsWith("R.class") && !filePath.contains('R$')) {
+                if (isValidClass(filePath)) {
                     String classPath
 //                    if (filePath.matches(Constant.DIRECTORY_DEBUG)) {
 //                        classPath = filePath.split(Constant.DIRECTORY_DEBUG_REGEX)[1]
@@ -142,28 +142,88 @@ class TransformUtil {
                     }
 
                     String className = classPath.substring(0, classPath.length() - 6).replace('\\', '.').replace('/', '.')
-                    CtClass ctClass = mPool.getCtClass(className)
-                    def annotation = ctClass.getAnnotation(ExportService.class)
-                    if (annotation != null) {
-                        println("==========================handleDirClass:${className}")
-                        if (ctClass.isFrozen()) {
-                            ctClass.defrost()
+                    if (classNeedHandle(className, project)) {
+                        CtClass ctClass = mPool.getCtClass(className)
+                        def annotation = ctClass.getAnnotation(ExportService.class)
+                        if (annotation != null) {
+                            println("==========================handleDirClass:${className}")
+                            if (ctClass.isFrozen()) {
+                                ctClass.defrost()
+                            }
+                            String packageName = className.substring(0, className.lastIndexOf("."))
+                            String originClassName = className.substring(className.lastIndexOf(".") + 1, className.length())
+                            String superClassName = originClassName + "Service"
+                            CtClass superCtClass = mPool.get(packageName + "." + superClassName)
+                            ctClass.setSuperclass(superCtClass)
+                            ctClass.writeFile(path)
                         }
-                        String packageName = className.substring(0, className.lastIndexOf("."))
-                        String originClassName = className.substring(className.lastIndexOf(".") + 1, className.length())
-                        String superClassName = originClassName + "Service"
-                        CtClass superCtClass = mPool.get(packageName + "." + superClassName)
-                        ctClass.setSuperclass(superCtClass)
-                        ctClass.writeFile(path)
+                        ctClass.detach()
                     }
-                    ctClass.detach()
                 }
 
             }
         }
     }
 
-    static boolean jarNeedHandle(String jarPath) {
+    /**
+     * 文件是否是合法的class文件
+     * @param classFilePath
+     * @return
+     */
+    static boolean isValidClass(String classFilePath) {
+        return classFilePath.endsWith(".class") && !classFilePath.endsWith("R.class") && !classFilePath.contains('R$')
+    }
+
+    /**
+     * 该class文件是否需要操作
+     * @param className
+     * @param project
+     * @return
+     */
+    static boolean classNeedHandle(String className, Project project) {
+        if (className == null) {
+            return false
+        }
+
+        String[] classesPackage = project.modulesConfig.includeClassPackage
+        if (classesPackage == null || classesPackage.length == 0) {
+            return true
+        }
+
+        for (String classPackage : classesPackage) {
+            if (className.startsWith(classPackage)) {
+                return true
+            }
+        }
+        return false
+    }
+
+    /**
+     * 过滤不需要操作的jar包
+     * @param jarPath
+     * @param project
+     * @return
+     */
+    static boolean jarNeedHandle(String jarPath, Project project) {
+
+        def jarPathFile = new File(jarPath)
+        if (!jarPathFile.exists()) {
+            return false
+        }
+        if (!jarPathFile.isFile()) {
+            return false
+        }
+        if (jarPathFile.length() == 0) {
+            return false
+        }
+
+        for (String excludeJar : project.modulesConfig.excludeJars) {
+            if (jarPath.endsWith(excludeJar)) {
+                System.err.println("################" + excludeJar)
+                return false
+            }
+        }
+
         if (jarPath == null || "" == jarPath) {
             return false
         }

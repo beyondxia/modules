@@ -8,6 +8,7 @@ class PAServicePlugin implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
+        project.extensions.create("modulesConfig", ConfigExtention)
         def android = project.extensions.findByType(AppExtension.class)
         if (android != null) {
             android.registerTransform(new PATransform(project))

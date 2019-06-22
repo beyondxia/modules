@@ -30,7 +30,7 @@ android {
 
     dexOptions {
         preDexLibraries = false
-//        keepRuntimeAnnotatedClasses false
+        keepRuntimeAnnotatedClasses false
     }
 
     compileOptions {
@@ -38,6 +38,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
+
+//modulesConfig {
+////    excludeJars 'annotation_dev-1.0.1.jar', 'InfoMonitor.jar'
+////    includeClassPackage "com.test", "com.beyondxia"
+//}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
