@@ -1,6 +1,5 @@
 package com.beyondxia.message;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.Toast;
 
 import com.beyondxia.bussiness1.export.LoginService;
 import com.beyondxia.host.export.HostExportService;
-import com.beyondxia.message.R;
 import com.beyondxia.modules.BCDictionary;
 
 

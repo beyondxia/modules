@@ -12,6 +12,7 @@ import com.beyondxia.modules.utils.ClassUtil;
 
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,18 +27,32 @@ public class ServiceHelper {
     private static final Map<String, Class> noCacheServices = new HashMap<>();
 
     private static final Map<String, Class> cacheServices = new HashMap<>();
+    private static Set<String> registerClassName = new HashSet<>();
 
 
     public static void init(Context context, boolean debug) {
+        init(context, debug, false);
+    }
+
+    public static void init(Context context, boolean debug, boolean registerWithPlugin) {
         try {
             PAServiceConfig.setIsDebug(debug);
-            Set<String> registerClassName = ClassUtil.getFileNameByPackageName(context, REGISTER_PACKAGE_NAME);
+            registerClassName.clear();
+            if (registerWithPlugin) {
+                pluginRegisterClassName();
+            } else {
+                registerClassName = ClassUtil.getFileNameByPackageName(context, REGISTER_PACKAGE_NAME);
+            }
             for (String className : registerClassName) {
-                Class<?> registerClazz = Class.forName(className);
-                Object registerObj = registerClazz.newInstance();
-                if (registerObj instanceof IRegisterService) {
-                    IRegisterService iRegisterService = (IRegisterService) registerObj;
-                    iRegisterService.registerService(cacheServices);
+                try {
+                    Class<?> registerClazz = Class.forName(className);
+                    Object registerObj = registerClazz.newInstance();
+                    if (registerObj instanceof IRegisterService) {
+                        IRegisterService iRegisterService = (IRegisterService) registerObj;
+                        iRegisterService.registerService(cacheServices);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
             registerServices();
@@ -45,6 +60,16 @@ public class ServiceHelper {
             e.printStackTrace();
         }
     }
+
+    private static void pluginRegisterClassName() {
+
+    }
+
+    private static void pluginRegister(String className) {
+        registerClassName.add(className);
+    }
+
+
 
     private static void register(String name, PAServiceEvn.ServiceFetcher fetcher) {
         if (!TextUtils.isEmpty(name) && fetcher != null) {

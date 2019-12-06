@@ -6,7 +6,7 @@ publishing {
 
             groupId 'com.beyondxia.modules'
             artifactId 'plugin_dev'
-            version '1.0.3'
+            version '1.0.4'
 
             from components.java
 

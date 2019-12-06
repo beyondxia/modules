@@ -3,6 +3,7 @@ package com.beyondxia.plugin
 import com.android.annotations.NonNull
 import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
+import com.beyondxia.plugin.utils.RegisterUtils
 import com.beyondxia.plugin.utils.TransformUtil
 import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.io.FileUtils
@@ -14,7 +15,12 @@ import org.gradle.api.Project
  *
  **/
 class PATransform extends Transform {
+
     private Project mProject
+
+    public static File fileContainsInitClass
+    public static List<String> registerList = new ArrayList()
+
 
     PATransform(Project project) {
         this.mProject = project
@@ -47,7 +53,7 @@ class PATransform extends Transform {
         transformInvocation.inputs.each { TransformInput input ->
             if (!input.directoryInputs.isEmpty()) {
                 def directoryInputPath = input.directoryInputs[0].file.absolutePath
-                println "directoryInputPath:${directoryInputPath}"
+                println "directoryInputPath===============================:${directoryInputPath}"
                 TransformUtil.appendClassPathByDirectory(mProject, directoryInputPath)
             }
         }
@@ -55,7 +61,11 @@ class PATransform extends Transform {
         transformInvocation.inputs.each { TransformInput input ->
             //对类型为“文件夹”的input进行遍历
             input.directoryInputs.each { DirectoryInput directoryInput ->
+                println "directoryInputPath===============================: ${directoryInput.file}"
                 TransformUtil.handleDirInput(directoryInput.file.absolutePath, mProject)
+                if (mProject.modulesConfig.registerWithPlugin) {
+                    RegisterUtils.scanDirectory(directoryInput.file)
+                }
                 def dest = transformInvocation.outputProvider.getContentLocation(directoryInput.name,
                         directoryInput.contentTypes, directoryInput.scopes,
                         Format.DIRECTORY)
@@ -76,9 +86,18 @@ class PATransform extends Transform {
                     jarName = jarName.substring(0, jarName.length() - 4)
                 }
                 def dest = transformInvocation.outputProvider.getContentLocation(jarName + md5Name, jarInput.contentTypes, jarInput.scopes, Format.JAR)
+                if (mProject.modulesConfig.registerWithPlugin) {
+                    if (RegisterUtils.shouldProcessPreDexJar(jarName)) {
+                        RegisterUtils.scanJar(jarInput.file, dest)
+                    }
+                }
                 FileUtils.copyFile(jarInput.file, dest)
             }
 
+        }
+
+        if (mProject.modulesConfig.registerWithPlugin) {
+            RegisterUtils.insertCodeToInitClass()
         }
 
     }

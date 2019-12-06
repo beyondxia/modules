@@ -13,9 +13,9 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.2'
         if (devMode.toBoolean()) {
-            classpath 'com.beyondxia.modules:plugin_dev:1.0.3'
+            classpath 'com.beyondxia.modules:plugin_dev:1.0.4'
         } else {
-            classpath 'com.beyondxia.modules:transform-plugin:1.1.3'
+            classpath 'com.beyondxia.modules:transform-plugin:1.2.0'
         }
 
         // package

@@ -32,7 +32,7 @@ dependencies {
     if (devMode.toBoolean()) {
         api 'com.beyondxia.modules:api_dev:1.0.1'
     } else {
-        api 'com.beyondxia.modules:api:1.0.3'
+        api 'com.beyondxia.modules:api:1.0.4'
     }
 //    api project(':modules-api')
 }

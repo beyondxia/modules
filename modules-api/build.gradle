@@ -66,7 +66,7 @@ dependencies {
 //    userOrg = 'beyondxia'
 //    groupId = 'com.beyondxia.modules'
 //    artifactId = 'api'
-//    publishVersion = '1.0.3'
+//    publishVersion = '1.0.4'
 //    desc = 'This is a api core for modules'
 //    website = 'https://github.com/beyondxia/api'
 //}

@@ -39,10 +39,11 @@ android {
     }
 }
 
-//modulesConfig {
-////    excludeJars 'annotation_dev-1.0.1.jar', 'InfoMonitor.jar'
-////    includeClassPackage "com.test", "com.beyondxia"
-//}
+modulesConfig {
+//    excludeJars 'annotation_dev-1.0.1.jar', 'InfoMonitor.jar'
+//    includeClassPackage "com.test", "com.beyondxia"
+    registerWithPlugin true
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])

@@ -57,7 +57,7 @@ class TransformUtil {
     }
 
     static void handleJarInput(String path, Project project) {
-        println("***********************handleJarInput:${path}")
+//        println("***********************handleJarInput:${path}")
         File jarFile = new File(path)
         // jar包解压后的保存路径
         String jarUnZipDir = jarFile.getParent() + File.separator + jarFile.getName().replace('.jar', '')
