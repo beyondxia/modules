@@ -75,7 +75,7 @@ publish {
     userOrg = 'beyondxia'
     groupId = 'com.beyondxia.modules'
     artifactId = 'transform-plugin'
-    publishVersion = '1.2.0'
+    publishVersion = '1.2.1'
     desc = 'This is a plugin for modules'
     website = 'https://github.com/beyondxia/transform'
 }

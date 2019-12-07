@@ -16,14 +16,16 @@ class TransformUtil {
     static void appendClassPathByDirectory(Project project, String path) {
         mPool.appendClassPath(project.android.bootClasspath[0].toString())
         mPool.importPackage("android.os.Bundle")
-        if (path.replace("\\", "/").matches(Constant.DIRECTORY_DEBUG)) {
+        if (path.replace("\\", "/").matches(Constant.DIRECTORY_DEBUG) ||
+                path.replace("\\", "/").matches(Constant.DIRECTORY_KOTLIN_DEBUG)) {
             Constant.DIRECTORYS_MODULES_API_CLASS_DEBUG.each {
                 mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs(it))
                 println("添加的classPath路径为: ${project.rootDir.toString() + SystemUtils.getPathByOs(it)}")
             }
 //            mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules_services_api/build/intermediates/classes/debug"))
 //            println("添加的classPath路径为:/modules_services_api/build/intermediates/classes/debug")
-        } else if (path.replace("\\", "/").matches(Constant.DIRECTORY_RELEASE)) {
+        } else if (path.replace("\\", "/").matches(Constant.DIRECTORY_RELEASE) ||
+                path.replace("\\", "/").matches(Constant.DIRECTORY_KOTLIN_RELEASE)) {
             Constant.DIRECTORYS_MODULES_API_CLASS_RELEASE.each {
                 mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs(it))
                 println("添加的classPath路径为: $it")
