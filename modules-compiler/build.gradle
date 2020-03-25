@@ -30,24 +30,24 @@ targetCompatibility = "1.8"
 
 //clean ---- build----generatePomFileForReleasePublication---publishReleasePublicationToMabenLocal---bintrayUpload
 // ./gradlew bintrayUpload -PbintrayUser=beyondxia -PbintrayKey=**** -PdryRun=false
-//apply plugin: 'com.novoda.bintray-release'
-//allprojects {
-//    repositories {
-//        jcenter()
-//    }
-//    tasks.withType(Javadoc) {
-//        options{ encoding "UTF-8"
-//            charSet 'UTF-8'
-//            links "http://docs.oracle.com/javase/7/docs/api"
-//        }
-//    }
-//}
-//publish {
-//    repoName = 'compiler'
-//    userOrg = 'beyondxia'
-//    groupId = 'com.beyondxia.modules'
-//    artifactId = 'compiler'
-//    publishVersion = '1.1.1'
-//    desc = 'This is a compiler for modules'
-//    website = 'https://github.com/beyondxia/compiler'
-//}
+apply plugin: 'com.novoda.bintray-release'
+allprojects {
+    repositories {
+        jcenter()
+    }
+    tasks.withType(Javadoc) {
+        options{ encoding "UTF-8"
+            charSet 'UTF-8'
+            links "http://docs.oracle.com/javase/7/docs/api"
+        }
+    }
+}
+publish {
+    repoName = 'compiler'
+    userOrg = 'beyondxia'
+    groupId = 'com.beyondxia.modules'
+    artifactId = 'compiler'
+    publishVersion = '1.2.0'
+    desc = 'This is a compiler for modules'
+    website = 'https://github.com/beyondxia/compiler'
+}

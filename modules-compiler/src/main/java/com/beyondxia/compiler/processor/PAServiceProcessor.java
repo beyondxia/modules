@@ -2,6 +2,7 @@ package com.beyondxia.compiler.processor;
 
 import com.beyondxia.annotation.ExportMethod;
 import com.beyondxia.annotation.ExportService;
+import com.beyondxia.compiler.utils.Logger;
 import com.beyondxia.compiler.utils.SystemUtils;
 import com.google.auto.service.AutoService;
 import com.beyondxia.compiler.utils.Constants;
@@ -29,6 +30,7 @@ import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
+import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
@@ -40,6 +42,7 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.Elements;
+import javax.tools.Diagnostic;
 
 import static com.beyondxia.compiler.utils.Constants.REGISTER_METHOD_NAME;
 import static com.beyondxia.compiler.utils.Constants.REGISTER_PACKAGE_NAME;
@@ -62,17 +65,26 @@ public class PAServiceProcessor extends AbstractProcessor {
     private HashMap<String, List<ExecutableElement>> methodMap = new HashMap<>();
     private Elements mElementUtils;
     private File mPath = new File(SystemUtils.getPathByOs("modules_services_api/src/main/java"));
+    //    private File mPath;
+    private Logger logger;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnvironment) {
         super.init(processingEnvironment);
         mFiler = processingEnvironment.getFiler();
         mElementUtils = processingEnvironment.getElementUtils();
+        logger = new Logger(processingEnv.getMessager());
 
-//        Map<String, String> options = processingEnv.getOptions();
-//        if (MapUtils.isNotEmpty(options)) {
-//            moduleName = options.get(MODULE_NAME);
-//        }
+        String serviceApiLocation = SystemUtils.getPathByOs(processingEnvironment.getOptions().get("serviceApiLocation"));
+        if (serviceApiLocation != null && !"".equals(serviceApiLocation)) {
+            logger.warning("serviceApiLocation is " + serviceApiLocation);
+            if (serviceApiLocation.endsWith(File.separator)) {
+                mPath = new File(serviceApiLocation + "src" + File.separator + "main" + File.separator + "java");
+            } else {
+                mPath = new File(serviceApiLocation + File.separator + "src" + File.separator + "main" + File.separator + "java");
+            }
+        }
+
     }
 
     @Override
@@ -87,7 +99,6 @@ public class PAServiceProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
-        System.out.println(mPath.getAbsoluteFile().toString());
         Set<? extends Element> methodElements = roundEnvironment.getElementsAnnotatedWith(ExportMethod.class);
         if (methodElements == null || methodElements.isEmpty()) {
             return false;
@@ -106,6 +117,8 @@ public class PAServiceProcessor extends AbstractProcessor {
     }
 
     private void generateLibraryResource() throws Exception {
+        logger.warning(">>> start generateLibraryResource <<<");
+        logger.warning("Path is " + mPath.getAbsoluteFile().toString());
         Set<String> keySet = methodMap.keySet();
         for (String fullClassName : keySet) {
             List<ExecutableElement> elementList = methodMap.get(fullClassName);
@@ -213,7 +226,7 @@ public class PAServiceProcessor extends AbstractProcessor {
     private Map<String, List<ClassName>> exportServiceMap = new HashMap<>();
 
     private void generateBuildResource() throws IOException {
-
+        logger.warning(">>> start generateBuildResource <<<");
         //先根据service注解中的moduleName是否为空进行分类
         Set<String> keySet = methodMap.keySet();
         for (String fullClassName : keySet) {

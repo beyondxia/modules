@@ -173,7 +173,7 @@ class TransformUtil {
      * @return
      */
     static boolean isValidClass(String classFilePath) {
-        return classFilePath.endsWith(".class") && !classFilePath.endsWith("R.class") && !classFilePath.contains('R$')
+        return classFilePath.endsWith(".class") && !classFilePath.endsWith("R.class") && !classFilePath.contains('$')
     }
 
     /**
