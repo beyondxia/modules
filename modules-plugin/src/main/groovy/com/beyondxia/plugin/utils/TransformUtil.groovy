@@ -19,16 +19,18 @@ class TransformUtil {
         if (path.replace("\\", "/").matches(Constant.DIRECTORY_DEBUG) ||
                 path.replace("\\", "/").matches(Constant.DIRECTORY_KOTLIN_DEBUG)) {
             Constant.DIRECTORYS_MODULES_API_CLASS_DEBUG.each {
-                mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs(it))
-                println("添加的classPath路径为: ${project.rootDir.toString() + SystemUtils.getPathByOs(it)}")
+                def classPath = project.rootProject.project("modules_services_api").projectDir.absolutePath + SystemUtils.getPathByOs(it)
+                mPool.appendClassPath(classPath)
+                println("添加的classPath路径为: ${classPath}")
             }
 //            mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules_services_api/build/intermediates/classes/debug"))
 //            println("添加的classPath路径为:/modules_services_api/build/intermediates/classes/debug")
         } else if (path.replace("\\", "/").matches(Constant.DIRECTORY_RELEASE) ||
                 path.replace("\\", "/").matches(Constant.DIRECTORY_KOTLIN_RELEASE)) {
             Constant.DIRECTORYS_MODULES_API_CLASS_RELEASE.each {
-                mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs(it))
-                println("添加的classPath路径为: $it")
+                def classPath = project.rootProject.project("modules_services_api").projectDir.absolutePath + SystemUtils.getPathByOs(it)
+                mPool.appendClassPath(classPath)
+                println("添加的classPath路径为: $classPath")
             }
 //            mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules_services_api/build/intermediates/classes/release"))
 //            println("添加的classPath路径为:/modules_services_api/build/intermediates/classes/release")
@@ -59,7 +61,7 @@ class TransformUtil {
     }
 
     static void handleJarInput(String path, Project project) {
-//        println("***********************handleJarInput:${path}")
+        println("=========>handleJarInput:${path}<============")
         File jarFile = new File(path)
         // jar包解压后的保存路径
         String jarUnZipDir = jarFile.getParent() + File.separator + jarFile.getName().replace('.jar', '')
@@ -79,7 +81,7 @@ class TransformUtil {
                 CtClass ctClass = mPool.getCtClass(className)
                 def annotation = ctClass.getAnnotation(ExportService.class)
                 if (annotation != null) {
-                    println("=====================handleJarClass:${className}")
+                    println("handleJarClass:${className}")
                     hasAnnotation = true
                     if (ctClass.isFrozen()) {
                         ctClass.defrost()
@@ -116,7 +118,7 @@ class TransformUtil {
         }
         // 删除目录
         FileUtils.deleteDirectory(new File(jarUnZipDir))
-//        println("delete******** completed")
+        println("===========>handleJarInput:${path}finish<==============")
     }
 
 
@@ -173,7 +175,7 @@ class TransformUtil {
      * @return
      */
     static boolean isValidClass(String classFilePath) {
-        return classFilePath.endsWith(".class") && !classFilePath.endsWith("R.class") && !classFilePath.contains('R$')
+        return classFilePath.endsWith(".class") && !classFilePath.endsWith("R.class") && !classFilePath.contains('$')
     }
 
     /**
