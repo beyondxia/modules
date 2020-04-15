@@ -17,8 +17,8 @@ class Constant {
 
 
     //框架生成文件的class文件地址
-    static final def DIRECTORYS_MODULES_API_CLASS_DEBUG = ["/modules_services_api/build/intermediates/classes/debug", "/modules_services_api/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes"] as String[]
-    static final def DIRECTORYS_MODULES_API_CLASS_RELEASE = ["/modules_services_api/build/intermediates/classes/release", "/modules_services_api/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes"] as String[]
+    static final def DIRECTORYS_MODULES_API_CLASS_DEBUG = ["/build/intermediates/classes/debug", "/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes"] as String[]
+    static final def DIRECTORYS_MODULES_API_CLASS_RELEASE = ["/build/intermediates/classes/release", "/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes"] as String[]
 
 
 }
