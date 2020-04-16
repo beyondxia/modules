@@ -3,12 +3,13 @@
   <groupId>com.beyondxia.modules</groupId>
   <artifactId>transform-plugin</artifactId>
   <versioning>
-    <release>1.2.3</release>
+    <release>1.2.5</release>
     <versions>
       <version>1.1.2</version>
       <version>1.1.5</version>
       <version>1.2.3</version>
+      <version>1.2.5</version>
     </versions>
-    <lastUpdated>20200415074355</lastUpdated>
+    <lastUpdated>20200416025204</lastUpdated>
   </versioning>
 </metadata>

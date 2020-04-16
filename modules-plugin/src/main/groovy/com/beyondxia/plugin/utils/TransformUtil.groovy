@@ -234,11 +234,13 @@ class TransformUtil {
         if (!jarPath.endsWith(".jar")) {
             return false
         }
+
+
         //不处理gradle依赖的jar包
-        if (jarPath.contains(".gradle/caches")) {
-            return false
-        }
-        return true
+//        if (jarPath.contains(".gradle/caches")) {
+//            return false
+//        }
+        return !jarPath.contains("com.android.support") && !jarPath.contains("/android/m2repository")
     }
 
 }
