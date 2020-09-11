@@ -15,7 +15,7 @@ buildscript {
         if (devMode.toBoolean()) {
             classpath 'com.beyondxia.modules:plugin_dev:1.0.4'
         } else {
-            classpath 'com.beyondxia.modules:transform-plugin:1.2.1'
+            classpath 'com.beyondxia.modules:transform-plugin:1.3.5'
         }
 
         // package
@@ -31,6 +31,11 @@ allprojects {
         }
         google()
         jcenter()
+
+        flatDir {
+            dirs project(":app").file('libs')
+        }
+
     }
 }
 

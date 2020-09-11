@@ -43,6 +43,7 @@ modulesConfig {
 //    excludeJars 'annotation_dev-1.0.1.jar', 'InfoMonitor.jar'
 //    includeClassPackage "com.test", "com.beyondxia"
     registerWithPlugin true
+//    businessMatchStrings "my", "export"
 }
 
 dependencies {
@@ -61,9 +62,9 @@ dependencies {
 
 
     implementation project(':modules_services_api')
-    runtimeOnly project(':business1')
+//    runtimeOnly project(':business1')
     runtimeOnly project(':other:business2')
 
-    implementation(name: 'library-debug', ext: 'aar')
+    implementation(name: 'business1-debug', ext: 'aar')
 
 }

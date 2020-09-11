@@ -4,7 +4,13 @@ import com.beyondxia.annotation.ExportService
 import javassist.ClassPool
 import javassist.CtClass
 import org.apache.commons.io.FileUtils
+import org.apache.commons.io.IOUtils
 import org.gradle.api.Project
+
+import java.util.jar.JarEntry
+import java.util.jar.JarFile
+import java.util.jar.JarOutputStream
+import java.util.zip.ZipEntry
 
 /**
  * Create by ChenWei on 2018/8/29 18:50
@@ -21,104 +27,89 @@ class TransformUtil {
             Constant.DIRECTORYS_MODULES_API_CLASS_DEBUG.each {
                 def classPath = project.rootProject.project("modules_services_api").projectDir.absolutePath + SystemUtils.getPathByOs(it)
                 mPool.appendClassPath(classPath)
-                println("添加的classPath路径为: ${classPath}")
             }
-//            mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules_services_api/build/intermediates/classes/debug"))
-//            println("添加的classPath路径为:/modules_services_api/build/intermediates/classes/debug")
         } else if (path.replace("\\", "/").matches(Constant.DIRECTORY_RELEASE) ||
                 path.replace("\\", "/").matches(Constant.DIRECTORY_KOTLIN_RELEASE)) {
             Constant.DIRECTORYS_MODULES_API_CLASS_RELEASE.each {
                 def classPath = project.rootProject.project("modules_services_api").projectDir.absolutePath + SystemUtils.getPathByOs(it)
                 mPool.appendClassPath(classPath)
-                println("添加的classPath路径为: $classPath")
             }
-//            mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules_services_api/build/intermediates/classes/release"))
-//            println("添加的classPath路径为:/modules_services_api/build/intermediates/classes/release")
         } else {
             throw new IllegalArgumentException("Illegal path ${path} - directory")
         }
-
-//        if (path.endsWith(".jar")) {
-//            //module jar
-//            if (path.replace("\\", "/").matches(Constant.MODULE_JAR_DEBUG)) {
-//                mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules_services_api/build/intermediates/classes/debug"))
-//            } else if (path.replace("\\", "/").matches(Constant.MODULE_JAR_RELEASE)) {
-//                mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules_services_api/build/intermediates/classes/release"))
-//            } else {
-//                throw new IllegalArgumentException("Illegal path ${path} - .jar")
-//            }
-//        } else {
-//            //module directory
-//            if (path.replace("\\", "/").matches(Constant.DIRECTORY_DEBUG)) {
-//                mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules_services_api/build/intermediates/classes/debug"))
-//            } else if (path.replace("\\", "/").matches(Constant.DIRECTORY_RELEASE)) {
-//                mPool.appendClassPath(project.rootDir.toString() + SystemUtils.getPathByOs("/modules_services_api/build/intermediates/classes/release"))
-//            } else {
-////                throw new IllegalArgumentException("Illegal path ${path} - directory")
-//            }
-//        }
-
     }
 
     static void handleJarInput(String path, Project project) {
-        println("=========>handleJarInput:${path}<============")
-        File jarFile = new File(path)
-        // jar包解压后的保存路径
-        String jarUnZipDir = jarFile.getParent() + File.separator + jarFile.getName().replace('.jar', '')
-        //若文件夹存在，则删除
-        FileUtils.deleteDirectory(new File(jarUnZipDir))
 
-        // 解压jar包, 返回jar包中所有class的完整类名的集合（带.class后缀）
-        List classNameList = JarZipUtil.unzipJar(path, jarUnZipDir)
+        def pathFile = new File(path)
 
-        //解压后的字节码中是否含有注解
-        boolean hasAnnotation = false
-        // 注入代码
-        mPool.appendClassPath(jarUnZipDir)
-        for (String className : classNameList) {
-            if (isValidClass(className) && classNeedHandle(className, project)) {
-                className = className.substring(0, className.length() - 6)
-                CtClass ctClass = mPool.getCtClass(className)
-                def annotation = ctClass.getAnnotation(ExportService.class)
-                if (annotation != null) {
-                    println("handleJarClass:${className}")
-                    hasAnnotation = true
-                    if (ctClass.isFrozen()) {
-                        ctClass.defrost()
+        def tmpClassLocation = "${project.buildDir.absolutePath}${File.separator}tmp${File.separator}modules-class"
+        def currentClassPath = mPool.appendClassPath(path)
+
+        def pathJar = new JarFile(pathFile)
+        def optJar = new File(pathFile.parent, "${pathFile.name}.opt")
+
+        if (optJar.exists()) {
+            optJar.delete()
+        }
+
+        def jarOutputStream = new JarOutputStream(new FileOutputStream(optJar))
+        def entries = pathJar.entries()
+        while (entries.hasMoreElements()) {
+            def jarEntry = entries.nextElement()
+            def entryName = jarEntry.name
+            def zipEntry = new ZipEntry(entryName)
+
+            if (entryName.endsWith('.class')) {
+                String cls = entryName.replace('\\', '.').replace('/', '.')
+                cls = cls.substring(0, cls.length() - 6)
+                try {
+                    CtClass ctClass = mPool.getCtClass(cls)
+                    def annotation = ctClass.getAnnotation(ExportService.class)
+                    if (annotation != null) {
+                        LoggerUtils.log("handleJarClass", cls)
+                        if (ctClass.isFrozen()) {
+                            ctClass.defrost()
+                        }
+                        String packageName = cls.substring(0, cls.lastIndexOf("."))
+                        String originClassName = cls.substring(cls.lastIndexOf(".") + 1, cls.length())
+                        String superClassName = originClassName + "Service"
+                        CtClass superCtClass = mPool.get(packageName + "." + superClassName)
+                        ctClass.setSuperclass(superCtClass)
+                        ctClass.writeFile(tmpClassLocation)
+                        superCtClass.detach()
                     }
-                    String packageName = className.substring(0, className.lastIndexOf("."))
-                    String originClassName = className.substring(className.lastIndexOf(".") + 1, className.length())
-                    String superClassName = originClassName + "Service"
-                    CtClass superCtClass = mPool.get(packageName + "." + superClassName)
-                    ctClass.setSuperclass(superCtClass)
-                    ctClass.writeFile(jarUnZipDir)
-                    superCtClass.detach()
+                    ctClass.detach()
+                } catch (e) {
+                    LoggerUtils.log("javaAssist exception", e.message)
                 }
-                ctClass.detach()
             }
-        }
-        if (hasAnnotation) {
-            //先备份一下jar包
-            File jarFileBak = new File(path.replace(".jar", "_bak.jar"))
-            FileUtils.copyFile(jarFile, jarFileBak)
-            // 删除原来的jar包
-            jarFile.delete()
-            try {
-                //重新打包jar
-                JarZipUtil.zipJar(jarUnZipDir, jarFile.toString())
-            } catch (Exception e) {
-                println("zipJar exception: ${e.getMessage()}")
-                //恢复原来的jar包
-                FileUtils.copyFile(jarFileBak, jarFile)
-                throw e
-            } finally {
-                // 删除备份的jar包
-                jarFileBak.delete()
+
+            def inputStream
+            def newClassFile = new File(tmpClassLocation, entryName.replace("\\", File.separator))
+            if (!newClassFile.directory && newClassFile.exists()) {
+                LoggerUtils.log("newClassFile", newClassFile.absolutePath)
+                inputStream = new FileInputStream(newClassFile)
+            } else {
+                inputStream = pathJar.getInputStream(zipEntry)
             }
+
+            jarOutputStream.putNextEntry(zipEntry)
+            jarOutputStream.write(IOUtils.toByteArray(inputStream))
+            inputStream.close()
+            jarOutputStream.closeEntry()
         }
-        // 删除目录
-        FileUtils.deleteDirectory(new File(jarUnZipDir))
-        println("===========>handleJarInput:${path}finish<==============")
+
+        jarOutputStream.close()
+        pathJar.close()
+
+        mPool.removeClassPath(currentClassPath)
+
+        if (pathFile.exists()) {
+            FileUtils.forceDelete(pathFile)
+        }
+        optJar.renameTo(pathFile)
+
     }
 
 
@@ -132,13 +123,6 @@ class TransformUtil {
 
                 if (isValidClass(filePath)) {
                     String classPath
-//                    if (filePath.matches(Constant.DIRECTORY_DEBUG)) {
-//                        classPath = filePath.split(Constant.DIRECTORY_DEBUG_REGEX)[1]
-//                    } else {
-//                        classPath = filePath.split(Constant.DIRECTORY_RELEASE_REGEX)[1]
-//                    }
-//                    println("==========================path:${path}")
-//                    println("==========================filePath:${filePath}")
                     if (path.endsWith("/") || path.endsWith("\\")) {
                         classPath = filePath.replace(path.replace("\\", "/"), "")
                     } else {
@@ -150,7 +134,7 @@ class TransformUtil {
                         CtClass ctClass = mPool.getCtClass(className)
                         def annotation = ctClass.getAnnotation(ExportService.class)
                         if (annotation != null) {
-                            println("==========================handleDirClass:${className}")
+                            LoggerUtils.log("handleDirClass", className)
                             if (ctClass.isFrozen()) {
                                 ctClass.defrost()
                             }
@@ -223,7 +207,6 @@ class TransformUtil {
 
         for (String excludeJar : project.modulesConfig.excludeJars) {
             if (jarPath.endsWith(excludeJar)) {
-                System.err.println("################" + excludeJar)
                 return false
             }
         }
@@ -234,13 +217,23 @@ class TransformUtil {
         if (!jarPath.endsWith(".jar")) {
             return false
         }
-
-
-        //不处理gradle依赖的jar包
-//        if (jarPath.contains(".gradle/caches")) {
-//            return false
-//        }
-        return !jarPath.contains("com.android.support") && !jarPath.contains("/android/m2repository")
+        def strs = project.modulesConfig.businessMatchStrings
+        if (strs != null && strs.length != 0) {
+            JarFile jarFile = new JarFile(new File(jarPath))
+            Enumeration<JarEntry> entries = jarFile.entries()
+            while (entries.hasMoreElements()) {
+                String jarEntryName = entries.nextElement().getName()
+                for (reg in strs) {
+                    if (jarEntryName.contains(reg)) {
+                        jarFile.close()
+                        return true
+                    }
+                }
+            }
+            jarFile.close()
+            return false
+        } else {
+            return true
+        }
     }
-
 }

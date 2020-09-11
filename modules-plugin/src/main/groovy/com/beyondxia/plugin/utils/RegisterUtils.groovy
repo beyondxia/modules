@@ -16,7 +16,7 @@ import java.util.zip.ZipEntry
 
 class RegisterUtils {
 
-    static TAG = "RegisterUtils -> "
+    static TAG = "RegisterUtils-Modules -> "
 
     static void scanJar(File src, File desc) {
 
@@ -28,7 +28,7 @@ class RegisterUtils {
             String jarEntryName = jarEntry.getName().replace("\\", "/")
             //记录需要修改的初始化class类所在的jar包
             if (ClassConstant.INIT_CLASS_FILE_NAME == jarEntryName) {
-                println TAG + "fileContainsInitClass: " + desc
+//                println TAG + "fileContainsInitClass: " + desc
                 PATransform.fileContainsInitClass = desc
             }
             //记录注册的页面
@@ -79,8 +79,8 @@ class RegisterUtils {
 
 
     static void insertCodeToInitClass() {
-        println("$TAG insertCodeToInitClass : ~~~~~start~~~~~~")
-        println("$TAG fileContainsInitClass : ${PATransform.fileContainsInitClass}")
+//        println("$TAG insertCodeToInitClass : ~~~~~start~~~~~~")
+//        println("$TAG fileContainsInitClass : ${PATransform.fileContainsInitClass}")
         if (PATransform.fileContainsInitClass != null) {
             realHandle(PATransform.fileContainsInitClass)
         }
@@ -104,7 +104,7 @@ class RegisterUtils {
             def zipEntry = new ZipEntry(entryName)
             def inputStream = file.getInputStream(zipEntry)
             jarOutputStream.putNextEntry(zipEntry)
-            println("$TAG entryName : $entryName")
+//            println("$TAG entryName : $entryName")
             if (entryName == ClassConstant.INIT_CLASS_FILE_NAME) {
                 def bytes = getNewInitClassByte(inputStream)
                 jarOutputStream.write(bytes)
@@ -143,7 +143,7 @@ class RegisterUtils {
         MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
             def visitMethod = super.visitMethod(access, name, desc, signature, exceptions)
 
-            println("$TAG visitMethod : $name")
+//            println("$TAG visitMethod : $name")
             if (name == ClassConstant.SERVICE_INIT_METHOD) {
                 visitMethod = new RouteInitMethodVisitor(Opcodes.ASM5, visitMethod)
             }
@@ -164,7 +164,7 @@ class RegisterUtils {
             if (opcode >= Opcodes.IRETURN && opcode <= Opcodes.RETURN) {
                 PATransform.registerList.forEach { className ->
                     def name = className.replace("/", ".")
-                    println("$TAG visitInsn name : $name")
+//                    println("$TAG visitInsn name : $name")
                     mv.visitLdcInsn(name)
                     mv.visitMethodInsn(
                             Opcodes.INVOKESTATIC,

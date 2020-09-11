@@ -53,7 +53,6 @@ class PATransform extends Transform {
         transformInvocation.inputs.each { TransformInput input ->
             if (!input.directoryInputs.isEmpty()) {
                 def directoryInputPath = input.directoryInputs[0].file.absolutePath
-                println "directoryInputPath===============================:${directoryInputPath}"
                 TransformUtil.appendClassPathByDirectory(mProject, directoryInputPath)
             }
         }
@@ -61,7 +60,6 @@ class PATransform extends Transform {
         transformInvocation.inputs.each { TransformInput input ->
             //对类型为“文件夹”的input进行遍历
             input.directoryInputs.each { DirectoryInput directoryInput ->
-                println "directoryInputPath===============================: ${directoryInput.file}"
                 TransformUtil.handleDirInput(directoryInput.file.absolutePath, mProject)
                 if (mProject.modulesConfig.registerWithPlugin) {
                     RegisterUtils.scanDirectory(directoryInput.file)
@@ -75,7 +73,6 @@ class PATransform extends Transform {
             //遍历jar文件，对jar不进行操作，但是要输出到指定目录
             input.jarInputs.each { JarInput jarInput ->
                 def jarPath = jarInput.file.absolutePath
-//                println("======jarInput***" + jarPath)
                 if (TransformUtil.jarNeedHandle(jarPath, mProject)) {
                     TransformUtil.handleJarInput(jarPath, mProject)
                 }
