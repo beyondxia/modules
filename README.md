@@ -129,6 +129,6 @@ QQ群号：881324846
 
 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=cbe96456218bbb48084e92163122e13c3159f3d507c3ebd5e66312a20d475496"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="modules技术交流群" title="modules技术交流群"></a>
 
-或者扫描下方二维码加群聊
+或者扫描下方二维码关注微信公众号
 
-<img src="image/qq.png" width="30%" height="30%"/>
+<img src="image/gzh.jpg" width="30%" height="30%"/>
