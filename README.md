@@ -131,4 +131,4 @@ QQ群号：881324846
 
 或者扫描下方二维码关注微信公众号
 
-<img src="image/gzh.jpg" width="30%" height="30%"/>
+<img src="https://mp.weixin.qq.com/misc/getqrcode?fakeid=3874073033&token=195467579&action=download&style=1&pixsize=224" width="30%" height="30%"/>
