@@ -19,23 +19,17 @@ class TransformUtil {
 
     static ClassPool mPool = ClassPool.getDefault()
 
-    static void appendClassPathByDirectory(Project project, String path) {
+    static void appendClassPathCore(Project project) {
         mPool.appendClassPath(project.android.bootClasspath[0].toString())
         mPool.importPackage("android.os.Bundle")
-        if (path.replace("\\", "/").matches(Constant.DIRECTORY_DEBUG) ||
-                path.replace("\\", "/").matches(Constant.DIRECTORY_KOTLIN_DEBUG)) {
-            Constant.DIRECTORYS_MODULES_API_CLASS_DEBUG.each {
-                def classPath = project.rootProject.project("modules_services_api").projectDir.absolutePath + SystemUtils.getPathByOs(it)
-                mPool.appendClassPath(classPath)
-            }
-        } else if (path.replace("\\", "/").matches(Constant.DIRECTORY_RELEASE) ||
-                path.replace("\\", "/").matches(Constant.DIRECTORY_KOTLIN_RELEASE)) {
-            Constant.DIRECTORYS_MODULES_API_CLASS_RELEASE.each {
-                def classPath = project.rootProject.project("modules_services_api").projectDir.absolutePath + SystemUtils.getPathByOs(it)
-                mPool.appendClassPath(classPath)
-            }
-        } else {
-            throw new IllegalArgumentException("Illegal path ${path} - directory")
+
+        def debugAPIDir = project.rootProject.project("modules_services_api").compileDebugJavaWithJavac.destinationDir
+        def releaseAPIDir = project.rootProject.project("modules_services_api").compileReleaseJavaWithJavac.destinationDir
+        if (debugAPIDir.exists()) {
+            mPool.appendClassPath(debugAPIDir.absolutePath)
+        }
+        if (releaseAPIDir.exists()) {
+            mPool.appendClassPath(releaseAPIDir.absolutePath)
         }
     }
 

@@ -39,6 +39,8 @@ android {
     }
 }
 
+
+
 modulesConfig {
 //    excludeJars 'annotation_dev-1.0.1.jar', 'InfoMonitor.jar'
 //    includeClassPackage "com.test", "com.beyondxia"

@@ -50,12 +50,7 @@ class PATransform extends Transform {
     @Override
     void transform(@NonNull TransformInvocation transformInvocation) {
         //首先获取构建类型并给mPool添加classPath
-        transformInvocation.inputs.each { TransformInput input ->
-            if (!input.directoryInputs.isEmpty()) {
-                def directoryInputPath = input.directoryInputs[0].file.absolutePath
-                TransformUtil.appendClassPathByDirectory(mProject, directoryInputPath)
-            }
-        }
+        TransformUtil.appendClassPathCore(mProject)
 
         transformInvocation.inputs.each { TransformInput input ->
             //对类型为“文件夹”的input进行遍历
