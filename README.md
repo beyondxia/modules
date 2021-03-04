@@ -26,7 +26,7 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.beyondxia.modules:transform-plugin:1.1.1'
+        classpath 'com.beyondxia.modules:transform-plugin:1.3.12'
         //...
 
     }
@@ -41,7 +41,7 @@ apply plugin: 'com.beyondxia.modules.plugin'
 ### 2、新建module
 在项目根目录中新建一个名为modules_services_api（工程名要命名为modules_services_api）的android library性质的子module（用来放置生成的公共源码），并在该module的build.gradle文件中添加如下依赖和属性配置：
 ```
-api 'com.beyondxia.modules:api:1.0.2'
+api 'com.beyondxia.modules:api:1.0.4'
 ```
 其他需要组件化业务module均需要依赖此module
 
